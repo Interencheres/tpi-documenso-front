@@ -12,6 +12,7 @@ indbApplication([
         chdir: './'
     ],
     nexus: [
+        group: "tpi",
         repositories: [
             snapshots: "tpi-snapshots",
             releases: "tpi-releases"
