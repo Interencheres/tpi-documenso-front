@@ -25,7 +25,21 @@ export const TemplateBrandingLogo = ({ assetBaseUrl, className = 'mb-4 h-6' }: T
     return <Img src={documensoLogoUrl} alt="Documenso Logo" className={className} />;
   }
 
-  const brandingLogo = <Img src={branding.brandingLogo} alt="Branding Logo" className={className} />;
+  // Custom logos share the same sizing across every tenant, so drop any height
+  // class from the caller and let `BRANDING_LOGO_STYLE` control the dimensions.
+  const brandingLogoClassName = className
+    .split(' ')
+    .filter((token) => !token.startsWith('h-'))
+    .join(' ');
+
+  const brandingLogo = (
+    <Img
+      src={branding.brandingLogo}
+      alt="Branding Logo"
+      className={brandingLogoClassName}
+      style={BRANDING_LOGO_STYLE}
+    />
+  );
 
   const safeBrandingUrl = getSafeBrandingUrl(branding.brandingUrl);
 
@@ -41,3 +55,11 @@ export const TemplateBrandingLogo = ({ assetBaseUrl, className = 'mb-4 h-6' }: T
 };
 
 export default TemplateBrandingLogo;
+
+const BRANDING_LOGO_STYLE = {
+  height: '64px',
+  width: 'auto',
+  maxWidth: '256px',
+  objectFit: 'contain',
+  objectPosition: 'left center',
+} satisfies React.CSSProperties;
